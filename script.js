@@ -10,7 +10,7 @@ fetch("gh-300-full.json")
     allQuestions = data.questions;
     let questionNumber = 1;
     allQuestions.forEach(q => {
-      q.question_number = questionNumber++;
+      q.questionNumber = q.questionNumber || questionNumber++;
     });
     renderQuestions(allQuestions);
   });
@@ -29,7 +29,7 @@ function renderQuestions(questions) {
 
     card.innerHTML = `
       <div class="question-title">
-        Question ${q.question_number}
+        Question ${q.questionNumber}
       </div>
       <div>${q.question || "<em>No question text provided</em>"}</div>
       <ul class="options">
