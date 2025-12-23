@@ -53,7 +53,8 @@ function renderQuestions(questions, keyword = "") {
 }
 
 function filterQuestions() {
-  const keyword = searchInput.value.toLowerCase();
+  const originalKeyword = searchInput.value;
+  const keyword = originalKeyword.toLowerCase();
   const searchOptions = searchOptionsToggle.checked;
 
   const filtered = allQuestions.filter(q => {
@@ -72,7 +73,7 @@ function filterQuestions() {
     );
   });
 
-  renderQuestions(filtered, keyword);
+  renderQuestions(filtered, originalKeyword);
 }
 
 searchInput.addEventListener("input", filterQuestions);
