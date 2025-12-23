@@ -5,6 +5,15 @@ body {
   padding: 0;
 }
 
+/* Search keyword highlighting */
+mark {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
 header {
   background: #24292f;
   color: #fff;

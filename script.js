@@ -15,12 +15,19 @@ fetch("gh-300-full.json")
     renderQuestions(allQuestions);
   });
 
-function renderQuestions(questions) {
+function renderQuestions(questions, keyword = "") {
   container.innerHTML = "";
 
   if (questions.length === 0) {
     container.innerHTML = "<p>No matching questions found.</p>";
     return;
+  }
+
+  // Helper function to highlight keyword in text
+  function highlightText(text, keyword) {
+    if (!keyword || !text) return text;
+    const regex = new RegExp(`(${keyword})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
   }
 
   questions.forEach((q, index) => {
@@ -29,13 +36,13 @@ function renderQuestions(questions) {
 
     card.innerHTML = `
       <div class="question-title">
-        Question ${q.questionNumber}
+        Topic ${q.topic} · Q${q.question_number}
       </div>
-      <div>${q.question || "<em>No question text provided</em>"}</div>
+      <div>${highlightText(q.question || "<em>No question text provided</em>", keyword)}</div>
       <ul class="options">
         ${Object.entries(q.options).map(([key, value]) => `
           <li class="${q.correct_answer.includes(key) ? "correct" : ""}">
-            <strong>${key}.</strong> ${value}
+            <strong>${key}.</strong> ${highlightText(value, keyword)}
           </li>
         `).join("")}
       </ul>
@@ -65,7 +72,7 @@ function filterQuestions() {
     );
   });
 
-  renderQuestions(filtered);
+  renderQuestions(filtered, keyword);
 }
 
 searchInput.addEventListener("input", filterQuestions);
