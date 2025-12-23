@@ -15,7 +15,7 @@ fetch("gh-300-full.json")
     renderQuestions(allQuestions);
   });
 
-function renderQuestions(questions, keyword = "") {
+function renderQuestions(questions, keyword = "", highlightOptions = false) {
   container.innerHTML = "";
 
   if (questions.length === 0) {
@@ -36,13 +36,13 @@ function renderQuestions(questions, keyword = "") {
 
     card.innerHTML = `
       <div class="question-title">
-        Topic ${q.topic} · Q${q.question_number}
+        Q${q.question_number}
       </div>
       <div>${highlightText(q.question || "<em>No question text provided</em>", keyword)}</div>
       <ul class="options">
         ${Object.entries(q.options).map(([key, value]) => `
           <li class="${q.correct_answer.includes(key) ? "correct" : ""}">
-            <strong>${key}.</strong> ${highlightText(value, keyword)}
+            <strong>${key}.</strong> ${highlightOptions ? highlightText(value, keyword) : value}
           </li>
         `).join("")}
       </ul>
@@ -73,7 +73,7 @@ function filterQuestions() {
     );
   });
 
-  renderQuestions(filtered, originalKeyword);
+  renderQuestions(filtered, originalKeyword, searchOptions);
 }
 
 searchInput.addEventListener("input", filterQuestions);
