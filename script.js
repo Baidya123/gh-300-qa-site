@@ -13,6 +13,7 @@ fetch("gh-300-full.json")
 
 function renderQuestions(questions) {
   container.innerHTML = "";
+  let questionNumber = 1;
 
   if (questions.length === 0) {
     container.innerHTML = "<p>No matching questions found.</p>";
@@ -25,7 +26,7 @@ function renderQuestions(questions) {
 
     card.innerHTML = `
       <div class="question-title">
-        Question ${index + 1}
+        Question ${questionNumber++}
       </div>
       <div>${q.question || "<em>No question text provided</em>"}</div>
       <ul class="options">
