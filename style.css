@@ -13,6 +13,7 @@ header {
 
 h1 {
   margin: 0 0 15px;
+  font-size: 1.5rem;
 }
 
 .search-bar {
@@ -25,12 +26,14 @@ h1 {
   flex: 1;
   padding: 10px;
   font-size: 15px;
+  min-width: 0; /* Allow flex shrinking */
 }
 
 .toggle {
   position: relative;
   width: 46px;
   height: 24px;
+  flex-shrink: 0;
 }
 
 .toggle input {
@@ -68,6 +71,7 @@ h1 {
 
 .toggle-label {
   font-size: 14px;
+  white-space: nowrap;
 }
 
 main {
@@ -79,6 +83,7 @@ main {
   border-radius: 6px;
   padding: 15px;
   margin-bottom: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .question-title {
@@ -101,4 +106,70 @@ main {
   background: #e6ffec;
   border-left: 4px solid #2da44e;
   font-weight: bold;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  header {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  #searchInput {
+    width: 100%;
+    flex: none;
+  }
+  
+  .toggle-label {
+    align-self: flex-start;
+    margin-top: 5px;
+  }
+  
+  main {
+    padding: 15px;
+  }
+  
+  .question-card {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 12px;
+  }
+  
+  h1 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  main {
+    padding: 12px;
+  }
+  
+  .question-card {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .question-title {
+    font-size: 0.95rem;
+  }
+  
+  .options li {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
 }
