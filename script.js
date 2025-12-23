@@ -19,13 +19,13 @@ function renderQuestions(questions) {
     return;
   }
 
-  questions.forEach(q => {
+  questions.forEach((q, index) => {
     const card = document.createElement("div");
     card.className = "question-card";
 
     card.innerHTML = `
       <div class="question-title">
-        Topic ${q.topic} · Q${q.question_number}
+        Question ${index + 1}
       </div>
       <div>${q.question || "<em>No question text provided</em>"}</div>
       <ul class="options">
