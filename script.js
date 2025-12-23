@@ -36,7 +36,7 @@ function renderQuestions(questions, keyword = "", highlightOptions = false) {
 
     card.innerHTML = `
       <div class="question-title">
-        Q${q.question_number}
+        Q${q.questionNumber}
       </div>
       <div>${highlightText(q.question || "<em>No question text provided</em>", keyword)}</div>
       <ul class="options">
