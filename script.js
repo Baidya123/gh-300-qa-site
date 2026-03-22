@@ -1,6 +1,6 @@
 
 let allQuestions = [];
-let currentExamFile = "gh-300-full.json";
+let currentExamFile = "gh-300.json";
 
 const container = document.getElementById("questionsContainer");
 const searchInput = document.getElementById("searchInput");

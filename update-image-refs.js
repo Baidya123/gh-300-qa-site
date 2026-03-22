@@ -3,7 +3,7 @@ const path = require('path');
 
 // Input and output files
 const inputFile = 'az-900.json';
-const outputFile = 'az-900-local.json';
+const outputFile = 'az-900.json';
 const imagesDir = path.join('resources', 'images');
 
 // Helper to extract image URLs from a string (markdown or HTML)
