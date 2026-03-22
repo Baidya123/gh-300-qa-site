@@ -13,7 +13,7 @@ if (!examSelect) {
   examSelect.id = "examSelect";
   examSelect.innerHTML = `
     <option value="gh-300-full.json">GH-300</option>
-    <option value="az-900.json">AZ-900</option>
+    <option value="az-900-local.json">AZ-900</option>
   `;
   document.querySelector("header").appendChild(examSelect);
 }
