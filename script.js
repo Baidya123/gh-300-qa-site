@@ -1,30 +1,42 @@
-
 let allQuestions = [];
-let currentExamFile = "gh-300.json";
+let currentExamFile = null;
 
 const container = document.getElementById("questionsContainer");
 const searchInput = document.getElementById("searchInput");
 const searchOptionsToggle = document.getElementById("searchOptionsToggle");
 
 // Add dropdown for exam file selection
-let examSelect = document.getElementById("examSelect");
-if (!examSelect) {
-  examSelect = document.createElement("select");
-  examSelect.id = "examSelect";
-  examSelect.innerHTML = `
-    <option value="gh-300-full.json">GH-300</option>
-    <option value="az-900-local.json">AZ-900</option>
-  `;
-  document.querySelector("header").appendChild(examSelect);
-}
+document.addEventListener("DOMContentLoaded", () => {
+  let examSelect = document.getElementById("examSelect");
+  if (!examSelect) {
+    examSelect = document.createElement("select");
+    examSelect.id = "examSelect";
+    document.querySelector("header").appendChild(examSelect);
+  }
 
-examSelect.addEventListener("change", () => {
-  currentExamFile = examSelect.value;
-  loadQuestions();
+  // Fetch exam file list from index.json
+  fetch("index.json")
+    .then(res => res.json())
+    .then(files => {
+      examSelect.innerHTML = files.map(f => {
+        // Display a friendly name (remove .json, replace dashes/underscores)
+        const label = f.replace(/\.json$/, "").replace(/[-_]/g, " ").toUpperCase();
+        return `<option value="${f}">${label}</option>`;
+      }).join("");
+      // Set default
+      currentExamFile = files[0];
+      loadQuestions();
+    });
+
+  examSelect.addEventListener("change", () => {
+    currentExamFile = examSelect.value;
+    loadQuestions();
+  });
 });
 
 function loadQuestions() {
-  fetch(currentExamFile)
+  if (!currentExamFile) return;
+  fetch(`exams/${currentExamFile}`)
     .then(res => res.json())
     .then(data => {
       allQuestions = data.questions;
