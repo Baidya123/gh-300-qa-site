@@ -78,8 +78,8 @@ async function checkLogin() {
   }
 }
 
-// Wrap all main content in a div for easy show/hide
-document.addEventListener("DOMContentLoaded", () => {
+// Wrap all main content in a div for easy show/hide and handle login before initializing app
+document.addEventListener("DOMContentLoaded", async () => {
   let mainContent = document.getElementById(MAIN_CONTENT_ID);
   if (!mainContent) {
     mainContent = document.createElement("div");
@@ -90,7 +90,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     document.body.appendChild(mainContent);
   }
-  checkLogin();
+  const loggedIn = await checkLogin();
+  if (loggedIn) {
+    initExamSelect();
+  } else {
+    // Wait for login, then initialize
+    const observer = new MutationObserver(() => {
+      if (sessionStorage.getItem("loggedIn") === "1") {
+        initExamSelect();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 });
 
 let allQuestions = [];
@@ -102,7 +114,6 @@ const searchOptionsToggle = document.getElementById("searchOptionsToggle");
 
 // Add dropdown for exam file selection
 
-// Only initialize exam select if logged in
 function initExamSelect() {
   let examSelect = document.getElementById("examSelect");
   if (!examSelect) {
@@ -131,20 +142,7 @@ function initExamSelect() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  if (checkLogin()) {
-    initExamSelect();
-  } else {
-    // Wait for login, then initialize
-    const observer = new MutationObserver(() => {
-      if (sessionStorage.getItem("loggedIn") === "1") {
-        initExamSelect();
-        observer.disconnect();
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
-});
+// (Removed duplicate DOMContentLoaded handler)
 
 function loadQuestions() {
   if (!currentExamFile) return;
