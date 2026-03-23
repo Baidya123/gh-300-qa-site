@@ -50,6 +50,7 @@ function showLoginOverlay() {
         overlay.style.display = "none";
         if (mainContent) mainContent.style.display = "";
         sessionStorage.setItem("loggedIn", "1");
+        location.reload(); // Refresh the page after successful login
       } else {
         document.getElementById("loginError").textContent = error.message;
         document.getElementById("loginError").style.display = "block";
