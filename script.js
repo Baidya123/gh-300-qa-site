@@ -4,7 +4,7 @@ const LOGIN_OVERLAY_ID = "loginOverlay";
 
 // Supabase config
 const SUPABASE_URL = "https://tvtxasywjdlzmpjikmqh.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2dHhhc3l3amRsem1wamlrbXFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODYxMjcsImV4cCI6MjA4OTg2MjEyN30.y-ThLV65BKtxzGpAcf077qz05-he5u6IwKcOZbDNQSE"; // TODO: Replace with your anon/public key
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2dHhhc3l3amRsem1wamlrbXFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODYxMjcsImV4cCI6MjA4OTg2MjEyN30.y-ThLV65BKtxzGpAcf077qz05-he5u6IwKcOZbDNQSE"; // anon/public key
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function showLoginOverlay() {
@@ -38,9 +38,6 @@ function showLoginOverlay() {
         </div>
         <div id="loginError" style="color:red;display:none;margin-bottom:1em;"></div>
         <button type="submit" style="width:100%;padding:0.5em;">Login</button>
-        <div style="margin-top:1em;text-align:center;">
-          <a href="#" id="signupLink">Sign up</a>
-        </div>
       </form>
     `;
     document.body.appendChild(overlay);
@@ -58,55 +55,13 @@ function showLoginOverlay() {
         document.getElementById("loginError").style.display = "block";
       }
     };
-    document.getElementById("signupLink").onclick = function(e) {
-      e.preventDefault();
-      showSignupOverlay();
-    };
+    // No sign-up link or handler
   } else {
     overlay.style.display = "flex";
   }
 }
 
-function showSignupOverlay() {
-  let overlay = document.getElementById(LOGIN_OVERLAY_ID);
-  if (!overlay) return;
-  overlay.innerHTML = `
-    <form id="signupForm" style="background:#fff;padding:2em 3em;border-radius:8px;box-shadow:0 2px 16px #0003;min-width:300px;">
-      <h2 style="margin-top:0">Sign Up</h2>
-      <div style="margin-bottom:1em;">
-        <input id="signupUser" type="email" placeholder="Email" style="width:100%;padding:0.5em;" required>
-      </div>
-      <div style="margin-bottom:1em;">
-        <input id="signupPass" type="password" placeholder="Password" style="width:100%;padding:0.5em;" required>
-      </div>
-      <div id="signupError" style="color:red;display:none;margin-bottom:1em;"></div>
-      <button type="submit" style="width:100%;padding:0.5em;">Sign Up</button>
-      <div style="margin-top:1em;text-align:center;">
-        <a href="#" id="backToLogin">Back to login</a>
-      </div>
-    </form>
-  `;
-  document.getElementById("signupForm").onsubmit = async function(e) {
-    e.preventDefault();
-    const email = document.getElementById("signupUser").value;
-    const pass = document.getElementById("signupPass").value;
-    const { error, data } = await supabase.auth.signUp({ email, password: pass });
-    if (!error) {
-      overlay.innerHTML = `<div style='background:#fff;padding:2em 3em;border-radius:8px;box-shadow:0 2px 16px #0003;min-width:300px;text-align:center;'>Check your email to confirm your registration.<br><br><a href="#" id="backToLogin">Back to login</a></div>`;
-      document.getElementById("backToLogin").onclick = function(e) {
-        e.preventDefault();
-        showLoginOverlay();
-      };
-    } else {
-      document.getElementById("signupError").textContent = error.message;
-      document.getElementById("signupError").style.display = "block";
-    }
-  };
-  document.getElementById("backToLogin").onclick = function(e) {
-    e.preventDefault();
-    showLoginOverlay();
-  };
-}
+// Sign-up overlay and logic removed (app is login-only)
 
 async function checkLogin() {
   const { data: { session } } = await supabase.auth.getSession();
