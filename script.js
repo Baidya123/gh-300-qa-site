@@ -46,7 +46,6 @@ function showLoginOverlay() {
       const email = document.getElementById("loginUser").value;
       const pass = document.getElementById("loginPass").value;
       const { error, data } = await supabase.auth.signInWithPassword({ email, password: pass });
-      console.log("Data", data)
       if (!error) {
         overlay.style.display = "none";
         if (mainContent) mainContent.style.display = "";
